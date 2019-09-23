@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   width="100%" height="100%" minWidth="500" minHeight="500"
+			   initialize="application_initializeHandler(event)">
+	
+	<fx:Style source="com/eussi/css/Style.css"/>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.eussi.skin.GradientBackgroundSkin;
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import spark.skins.spark.BorderContainerSkin;			
+			
+			protected function btnClickMe_clickHandler(event:MouseEvent):void 
+			{
+				Alert.show("Alex skin!");				
+			}
+			
+			protected function application_initializeHandler(event:FlexEvent):void
+			{
+				lblHeader.text = "First skin Application";				
+			}
+			
+			protected function gradientBackground_clickHandler(event:MouseEvent):void 
+			{
+				mainContainer.setStyle("skinClass", GradientBackgroundSkin );
+			}
+			
+			protected function standardBackground_clickHandler(event:MouseEvent):void
+			{
+				mainContainer.setStyle("skinClass", BorderContainerSkin );
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:RadioButtonGroup id="selectorGroup" />
+	</fx:Declarations>
+	<s:BorderContainer width="500" height="500" id="mainContainer"
+					   skinClass="spark.skins.spark.BorderContainerSkin" 
+					   horizontalCenter="0" verticalCenter="0" cornerRadius="10">
+		<s:VGroup width="100%" height="100%" gap="50" horizontalAlign="center"
+				  verticalAlign="middle">
+			<s:Label id="lblHeader" fontSize="40" color="green" 
+					 styleName="heading"/>
+			<s:Button label="Click Me!" id="btnClickMe" 
+					  click="btnClickMe_clickHandler(event)"/>
+			<s:RadioButton color="gray" fontWeight="bold" 
+						   group="{selectorGroup}" label="Standard Background" 
+						   click="standardBackground_clickHandler(event)" selected="true"/>
+			<s:RadioButton color="gray" fontWeight="bold" 
+						   group="{selectorGroup}" label="Gradient Background" 
+						   click="gradientBackground_clickHandler(event)"/>			
+		</s:VGroup>			
+	</s:BorderContainer>	
+</s:Application>

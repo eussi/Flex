@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   width="100%" height="100%" minWidth="500" minHeight="500"
+			   >
+	<fx:Style source="com/eussi/css/Style.css"/>
+	<fx:Script>
+		<![CDATA[
+			protected function reportEvent(event:MouseEvent):void
+			{
+				var target:String = event.target.id;
+				var currentTarget:String = event.target.id;
+				var eventPhase: String;
+				
+				if(event.target is Button){
+					var button:Button = event.target as Button;
+					target = button.label + " Button";
+				} else if(event.target is HGroup){
+					var hGroup:HGroup = event.target as HGroup;
+					target = hGroup.id + " HGroup";
+				}else if(event.target is Panel){
+					var panel:Panel = event.target as Panel;
+					target = panel.id + " Panel";
+				}
+				
+				if(event.currentTarget is Button){
+					var button1:Button = event.currentTarget as Button;
+					currentTarget = button1.label + " Button";
+				}else if(event.currentTarget is HGroup){
+					var hGroup1:HGroup = event.currentTarget as HGroup;
+					currentTarget = hGroup1.id + " HGroup";
+				}else if(event.currentTarget is Panel){
+					var panel1:Panel = event.currentTarget as Panel;
+					currentTarget = panel1.id + " Panel";
+				}
+				
+				var eventPhaseInt:uint = event.eventPhase;
+				
+				if(eventPhaseInt == EventPhase.AT_TARGET){      
+					eventPhase = "Target";
+				} else if(eventPhaseInt == EventPhase.BUBBLING_PHASE){
+					eventPhase = "Bubbling";
+				}else if(eventPhaseInt == EventPhase.CAPTURING_PHASE){
+					eventPhase = "Capturing";
+				}
+				
+				reports.text += " Target: " + target + "\n currentTarget: " +
+					currentTarget + "\n Phase: " + eventPhase + "\n----------\n";				
+			}
+		]]>
+	</fx:Script>
+	<s:BorderContainer width="630" height="480" id="mainContainer" 
+					   styleName="container">
+		<s:VGroup width="100%" height="100%" gap="10" 
+				  horizontalAlign="center" verticalAlign="middle">
+			<s:Label id="lblHeader" text="Event Handling Demonstration" 
+					 fontSize="40" color="0x777777" styleName="heading"/>
+			<s:Panel id="parentPanel" title="Main Parent" 
+					 click="reportEvent(event)" width="500" 
+					 height="100" includeInLayout="true" visible="true">
+				<s:layout>
+					<s:VerticalLayout  gap="10" 
+									   verticalAlign="middle" horizontalAlign="center"/>
+				</s:layout>						
+				<s:HGroup id="mainHGroup" click="reportEvent(event)">
+					<s:Button label="Click Me" 
+							  click="reportEvent(event)"/>
+				</s:HGroup>						
+			</s:Panel>	
+			<s:Panel id="reportPanel" 
+					 title="Events" width="500" height="230">
+				<mx:Text id="reports" />				
+			</s:Panel>
+		</s:VGroup>	 
+	</s:BorderContainer>	
+</s:Application>
